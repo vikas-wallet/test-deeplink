@@ -3,11 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deeplink test</title>
+    <title>Deeplink Test</title>
 </head>
 <body>
-    <h1>Welcome to the deeplink test Page!</h1>
-    <a href = "rakutenwalletweb3://"> Click it </a>
-    <p>This is my first hosted HTML page.</p>
+    <h1>Welcome to the Deeplink Test Page!</h1>
+
+    <!-- Link 1: Direct link to rakutenwalletweb3:// -->
+    <a href="rakutenwalletweb3://">Open rakutenwalletweb3:// (Direct Link)</a>
+    <br><br>
+
+    <!-- Link 2: Open rakutenwalletweb3:// using JavaScript -->
+    <a href="#" onclick="openDeeplink()">Open rakutenwalletweb3:// (via JavaScript)</a>
+    <br><br>
+
+    <!-- Link 3: Navigate to another page that opens rakutenwalletweb3:// on load -->
+    <a href="deeplink.html">Go to another page to open rakutenwalletweb3://</a>
+
+    <p>Test for the deeplink</p>
+
+    <!-- JavaScript function to open the deeplink -->
+    <script>
+        function openDeeplink() {
+            window.location.href = "rakutenwalletweb3://";
+        }
+    </script>
 </body>
 </html>
