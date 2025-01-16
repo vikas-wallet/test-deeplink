@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeplink Redirect</title>
+</head>
+<body>
+    <h1>Redirecting to rakutenwalletweb3://...</h1>
+    <p>If the deeplink does not open automatically, <a href="rakutenwalletweb3://">click here</a>.</p>
+
+    <script>
+        // Automatically redirect to the deeplink on page load
+        window.onload = function() {
+            window.location.href = "rakutenwalletweb3://";
+        };
+    </script>
+</body>
+</html>
