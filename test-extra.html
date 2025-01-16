@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeplink Test</title>
+</head>
+<body>
+    <h1>Deeplink Test Page</h1>
+    <p>Below are different methods to open the <code>rakutenwalletweb3://</code> link:</p>
+
+    <hr>
+
+    <!-- 1. Direct Link -->
+    <h2>1. Direct Link</h2>
+    <a href="rakutenwalletweb3://">Open Rakuten Wallet (Direct Link)</a>
+    <p>This is a simple direct link to the custom protocol.</p>
+
+    <hr>
+
+    <!-- 2. JavaScript with window.location -->
+    <h2>2. JavaScript with window.location</h2>
+    <button onclick="openWithWindowLocation()">Open Rakuten Wallet (via JavaScript)</button>
+    <p>This uses JavaScript to set <code>window.location.href</code> to the custom protocol.</p>
+    <script>
+        function openWithWindowLocation() {
+            window.location.href = "rakutenwalletweb3://";
+        }
+    </script>
+
+    <hr>
+
+    <!-- 3. Hidden <a> Tag with JavaScript -->
+    <h2>3. Hidden <code>&lt;a&gt;</code> Tag with JavaScript</h2>
+    <a id="hiddenDeeplink" href="rakutenwalletweb3://" style="display:none;">Hidden Link</a>
+    <button onclick="openWithHiddenLink()">Open Rakuten Wallet (via Hidden Link)</button>
+    <p>This programmatically clicks a hidden <code>&lt;a&gt;</code> tag to open the custom protocol.</p>
+    <script>
+        function openWithHiddenLink() {
+            document.getElementById("hiddenDeeplink").click();
+        }
+    </script>
+
+    <hr>
+
+    <!-- 4. Fallback Mechanism -->
+    <h2>4. Fallback Mechanism</h2>
+    <button onclick="openWithFallback()">Open Rakuten Wallet (with Fallback)</button>
+    <p>If the app is not installed, this will redirect to a fallback URL after 2 seconds.</p>
+    <script>
+        function openWithFallback() {
+            // Try to open the app
+            window.location.href = "rakutenwalletweb3://";
+
+            // Redirect to fallback URL after a delay if the app is not installed
+            setTimeout(function() {
+                window.location.href = "https://example.com/download"; // Replace with your app's download page
+            }, 2000);
+        }
+    </script>
+
+    <hr>
+
+    <!-- 5. QR Code -->
+    <h2>5. QR Code</h2>
+    <p>Scan the QR code below to open the app:</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=rakutenwalletweb3://&size=150x150" alt="QR Code for Rakuten Wallet">
+    <p>This QR code contains the <code>rakutenwalletweb3://</code> link.</p>
+
+    <hr>
+
+    <!-- 6. Auto-Redirect on Another Page -->
+    <h2>6. Auto-Redirect on Another Page</h2>
+    <a href="deeplink.html">Go to Auto-Redirect Page</a>
+    <p>This link navigates to another page that automatically opens the custom protocol on load.</p>
+
+    <hr>
+
+    <!-- 7. Using an <iframe> -->
+    <h2>7. Using an <code>&lt;iframe&gt;</code></h2>
+    <button onclick="openWithIframe()">Open Rakuten Wallet (via iframe)</button>
+    <p>This attempts to open the custom protocol using an <code>&lt;iframe&gt;</code>.</p>
+    <iframe id="deeplinkIframe" style="display:none;"></iframe>
+    <script>
+        function openWithIframe() {
+            document.getElementById("deeplinkIframe").src = "rakutenwalletweb3://";
+        }
+    </script>
+
+    <hr>
+
+    <p>Test all the methods above to see which one works best for your use case.</p>
+</body>
+</html>
