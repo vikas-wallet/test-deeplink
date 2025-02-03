@@ -36,12 +36,6 @@
             }
         });
 
-        // Listen for focus event (if the user comes back to the browser)
-        window.addEventListener("focus", function () {
-            // If the user comes back to the browser, clear the fallback timer
-            clearTimeout(fallbackTimeout);
-        });
-
         // Attempt to open the app
         window.location.href = "rakutenwalletweb3://";
 
