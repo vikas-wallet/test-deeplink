@@ -14,34 +14,39 @@
     <!-- 1. Fallback Mechanism -->
     <h2>1. Fallback Mechanism</h2>
     <button onclick="openWithFallback()">Open Rakuten Wallet (with Fallback)</button>
-    <p>If the app is not installed, this will redirect to a fallback URL after 2 seconds.</p>
-    <script>
+    <p>If the app is not installed, this will redirect to a fallback URL after 2-seconds.</p>
+<script>
     function openWithFallback() {
         let fallbackTimeout;
+        let appOpened = false;
 
         // Start a timer to redirect to the fallback page after 2 seconds
         fallbackTimeout = setTimeout(function() {
-            window.location.href = "fallback.html"; // Redirect to fallback page
+            if (!appOpened) {
+                window.location.href = "fallback.html"; // Redirect to fallback page
+            }
         }, 2000);
 
         // Listen for visibility change (to detect if the user left the browser)
         document.addEventListener("visibilitychange", function() {
             if (document.visibilityState === "hidden") {
                 // User left the browser (likely opened the app), so clear the fallback timer
+                appOpened = true;
                 clearTimeout(fallbackTimeout);
             }
         });
 
-        // Attempt to open the app
-        window.location.href = "rakutenwalletweb3://";
-
-        // Add an additional check for user interaction
+        // Listen for focus event (if the user comes back to the browser)
         window.addEventListener("focus", function() {
             // If the user comes back to the browser, clear the fallback timer
             clearTimeout(fallbackTimeout);
         });
+
+        // Attempt to open the app
+        window.location.href = "rakutenwalletweb3://";
     }
 </script>
+
 
 
 
