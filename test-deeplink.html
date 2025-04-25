@@ -6,32 +6,9 @@
     <title>Deeplink Redirect</title>
 </head>
 <body>
-    <h1>App is not installed</h1>
-    <p>If the deeplink does not open automatically, this means you do not have the Rakuten Wallet installed on your phone.</p>
-
+    <h1>Attempting to open app...</h1>
     <script>
-        window.onload = function() {
-            // Record the current time
-            const startTime = Date.now();
-
-            // Attempt to open the app using the deep link
-            window.location.href = "rakutenwalletweb3://";
-
-            // Set a timeout to check if the app was opened
-            setTimeout(function() {
-                // Calculate the elapsed time
-                const elapsedTime = Date.now() - startTime;
-
-                // If the elapsed time is very short, assume the app was opened
-                if (elapsedTime < 1500) { 
-                    // Go back to the previous page
-                    history.back();
-                } else { 
-                    // Stay on the current page (app is not installed)
-                    console.log("App not installed or failed to open.");
-                }
-            }, 1000); // Adjust the timeout duration as needed
-        };
+        window.location.href = "rakutenwalletweb3://";
     </script>
 </body>
 </html>
