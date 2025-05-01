@@ -11,15 +11,11 @@
         var appURL = "rakutenwalletweb3://";
         var redirectTimer;
 
-        function redirectBack() {
-            window.history.back();
-        }
-
         function appNotInstalled() {
             // This function is called if the app doesn't open within the timeout.
-            // In this case, we do *nothing* - we don't redirect.
-            console.log("App not installed or failed to open.");
-            clearTimeout(redirectTimer); // Clear the timer to prevent redirecting later.
+            // Show an alert dialog.
+            alert("Rakuten Wallet Web3 app is not installed. Please install the app to continue.");
+            clearTimeout(redirectTimer); // Clear the timer.
         }
 
         // Start a timer. If the app doesn't open within the timeout, we assume it's not installed.
