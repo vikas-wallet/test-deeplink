@@ -9,18 +9,20 @@
     <script>
         var appURL = "rakutenwalletweb3://";
         var appOpened = false;
-        var redirecting = false; // Flag to prevent multiple redirects
+        var previousPage = document.referrer; // Get the previous page URL
 
-        function redirectBack() {
-            if (!redirecting) {
-                redirecting = true;
-                window.history.back();
+        function redirectToPreviousPage() {
+            if (previousPage) {
+                window.location.href = previousPage; // Redirect to the previous page
+            } else {
+                // If document.referrer is empty, provide a fallback
+                alert("Could not determine previous page. Please navigate back manually.");
             }
         }
 
         function showAlert() {
             alert("Rakuten Wallet Web3 app may not be installed. Click OK to return to the previous page.");
-            redirectBack();
+            redirectToPreviousPage();
         }
 
         var alertTimer = setTimeout(function() {
@@ -52,7 +54,7 @@
                     showAlert();
                 }
             }, 1000);
-        }, 100); // Short delay before attempting deeplink
+        }, 100);
     </script>
 </body>
 </html>
