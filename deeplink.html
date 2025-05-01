@@ -9,9 +9,13 @@
     <script>
         var appURL = "rakutenwalletweb3://";
         var appOpened = false;
+        var redirecting = false; // Flag to prevent multiple redirects
 
         function redirectBack() {
-            window.history.back();
+            if (!redirecting) {
+                redirecting = true;
+                window.history.back();
+            }
         }
 
         function showAlert() {
@@ -25,8 +29,6 @@
             }
         }, 500);
 
-        window.location.replace(appURL);
-
         function handleAppOpen() {
             appOpened = true;
             clearTimeout(alertTimer);
@@ -39,6 +41,18 @@
                 handleAppOpen();
             }
         });
+
+        // Delay the deeplink attempt slightly to allow event listeners to attach
+        setTimeout(function() {
+            window.location.replace(appURL);
+
+            // If the page is still visible after a short time, assume the app didn't open
+            setTimeout(function() {
+                if (!appOpened) {
+                    showAlert();
+                }
+            }, 1000);
+        }, 100); // Short delay before attempting deeplink
     </script>
 </body>
 </html>
