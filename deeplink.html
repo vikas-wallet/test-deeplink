@@ -8,41 +8,37 @@
 <body>
     <script>
         var appURL = "rakutenwalletweb3://";
-        var appOpened = false; // Flag to track if the app opened
+        var appOpened = false;
 
-        // Function to redirect back
         function redirectBack() {
             window.history.back();
         }
 
-        // Function to show the alert
         function showAlert() {
             alert("Rakuten Wallet Web3 app may not be installed. Click OK to return to the previous page.");
             redirectBack();
         }
 
-        // Set a timeout to show the alert if the app doesn't open within a reasonable time
         var alertTimer = setTimeout(function() {
             if (!appOpened) {
                 showAlert();
             }
-        }, 500); // Adjust the timeout as needed (500ms is a good starting point)
+        }, 500);
 
-        // Attempt to open the app
         window.location.replace(appURL);
 
-        // Try to detect if the app opened by checking if the page loses focus
-        window.addEventListener('blur', function() {
+        function handleAppOpen() {
             appOpened = true;
-            clearTimeout(alertTimer); // Clear the timer if the app opened
-        });
+            clearTimeout(alertTimer);
+        }
 
-        // If the page is still visible after a short time, assume the app didn't open
-        setTimeout(function() {
-            if (!appOpened && document.visibilityState === 'visible') {
-                showAlert();
+        // Listen for both blur and visibilitychange events
+        window.addEventListener('blur', handleAppOpen);
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                handleAppOpen();
             }
-        }, 1000); // Adjust the timeout as needed (1000ms is a good starting point)
+        });
     </script>
 </body>
 </html>
