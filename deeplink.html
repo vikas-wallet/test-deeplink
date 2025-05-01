@@ -8,24 +8,13 @@
 <body>
     <script>
         var appURL = "rakutenwalletweb3://";
-        var redirectTimer;
 
-        function redirectBack() {
+        // Use a timeout to ensure the redirect happens even if the app opens quickly
+        setTimeout(function() {
             window.history.back();
-        }
-
-        function appNotInstalled() {
-            redirectBack();
-        }
-
-        redirectTimer = setTimeout(appNotInstalled, 200); // Adjust timeout as needed
+        }, 100); // A very short delay (100ms) should be sufficient
 
         window.location.replace(appURL);
-
-        // Optional:  A fallback URL could be used, but it's generally better to do nothing.
-        // setTimeout(function() {
-        //     window.location.href = "https://example.com/fallback";
-        // }, 2000);
     </script>
 </body>
 </html>
