@@ -15,19 +15,17 @@
         }
 
         function appNotInstalled() {
-            // If the app is not installed, just go back.
             redirectBack();
         }
 
         redirectTimer = setTimeout(appNotInstalled, 200); // Adjust timeout as needed
 
-        try {
-            window.location.replace(appURL);
-        } catch (e) {
-            // If there's an error opening the deeplink, just go back.
-            console.error("Error opening deeplink:", e);
-            redirectBack();
-        }
+        window.location.replace(appURL);
+
+        // Optional:  A fallback URL could be used, but it's generally better to do nothing.
+        // setTimeout(function() {
+        //     window.location.href = "https://example.com/fallback";
+        // }, 2000);
     </script>
 </body>
 </html>
