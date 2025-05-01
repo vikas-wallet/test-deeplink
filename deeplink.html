@@ -9,12 +9,19 @@
     <script>
         var appURL = "rakutenwalletweb3://";
 
-        // Use a timeout to ensure the redirect happens even if the app opens quickly
-        setTimeout(function() {
+        // Function to redirect back
+        function redirectBack() {
             window.history.back();
-        }, 100); // A very short delay (100ms) should be sufficient
+        }
 
+        // Attempt to open the app
         window.location.replace(appURL);
+
+        // Display the alert *after* attempting to open the app
+        alert("Rakuten Wallet Web3 app may not be installed.  Click OK to return to the previous page.");
+
+        // Redirect back immediately after the alert is displayed.
+        redirectBack();
     </script>
 </body>
 </html>
