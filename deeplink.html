@@ -7,27 +7,27 @@
 </head>
 <body>
     <script>
-        // Attempt to open the app
         var appURL = "rakutenwalletweb3://";
         var redirectTimer;
 
-        function appNotInstalled() {
-            // This function is called if the app doesn't open within the timeout.
-            alert("Rakuten Wallet Web3 app is not installed. Please install the app to continue.");
-            window.history.back(); // Go back to the previous page after the alert.
-            clearTimeout(redirectTimer);
+        function redirectBack() {
+            window.history.back();
         }
 
-        // Start a timer.
-        redirectTimer = setTimeout(appNotInstalled, 200);
+        function appNotInstalled() {
+            // If the app is not installed, just go back.
+            redirectBack();
+        }
 
-        // Try to open the app using window.location.replace().
-        window.location.replace(appURL);
+        redirectTimer = setTimeout(appNotInstalled, 200); // Adjust timeout as needed
 
-        // Optional: Fallback URL (generally not recommended).
-        // setTimeout(function() {
-        //     window.location.href = "https://example.com/fallback";
-        // }, 2000);
+        try {
+            window.location.replace(appURL);
+        } catch (e) {
+            // If there's an error opening the deeplink, just go back.
+            console.error("Error opening deeplink:", e);
+            redirectBack();
+        }
     </script>
 </body>
 </html>
