@@ -13,18 +13,18 @@
 
         function appNotInstalled() {
             // This function is called if the app doesn't open within the timeout.
-            // Show an alert dialog.
             alert("Rakuten Wallet Web3 app is not installed. Please install the app to continue.");
-            clearTimeout(redirectTimer); // Clear the timer.
+            window.history.back(); // Go back to the previous page after the alert.
+            clearTimeout(redirectTimer);
         }
 
-        // Start a timer. If the app doesn't open within the timeout, we assume it's not installed.
-        redirectTimer = setTimeout(appNotInstalled, 200); // Adjust timeout as needed
+        // Start a timer.
+        redirectTimer = setTimeout(appNotInstalled, 200);
 
-        // Try to open the app.
-        window.location.href = appURL;
+        // Try to open the app using window.location.replace().
+        window.location.replace(appURL);
 
-        // Optional:  A fallback URL could be used, but it's generally better to do nothing.
+        // Optional: Fallback URL (generally not recommended).
         // setTimeout(function() {
         //     window.location.href = "https://example.com/fallback";
         // }, 2000);
