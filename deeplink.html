@@ -9,13 +9,12 @@
     <script>
         var appURL = "rakutenwalletweb3://";
         var appOpened = false;
-        var previousPage = document.referrer; // Get the previous page URL
+        var previousPage = document.referrer;
 
         function redirectToPreviousPage() {
             if (previousPage) {
-                window.location.href = previousPage; // Redirect to the previous page
+                window.location.href = previousPage;
             } else {
-                // If document.referrer is empty, provide a fallback
                 alert("Could not determine previous page. Please navigate back manually.");
             }
         }
@@ -25,36 +24,32 @@
             redirectToPreviousPage();
         }
 
-        var alertTimer = setTimeout(function() {
+        // Use a more robust method for checking if the app opened
+        function checkAppOpen() {
             if (!appOpened) {
                 showAlert();
             }
-        }, 500);
+        }
 
         function handleAppOpen() {
             appOpened = true;
-            clearTimeout(alertTimer);
+            // No need to clear the timer here, let it expire naturally
         }
 
-        // Listen for both blur and visibilitychange events
-        window.addEventListener('blur', handleAppOpen);
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'hidden') {
-                handleAppOpen();
-            }
-        });
-
-        // Delay the deeplink attempt slightly to allow event listeners to attach
-        setTimeout(function() {
+        // Attempt to open the app
+        function openApp() {
             window.location.replace(appURL);
 
-            // If the page is still visible after a short time, assume the app didn't open
-            setTimeout(function() {
-                if (!appOpened) {
-                    showAlert();
-                }
-            }, 1000);
-        }, 100);
+            // Start a timer to check if the app opened after a delay
+            setTimeout(checkAppOpen, 2000); // Increased delay to 2 seconds
+        }
+
+        // Event listeners (using a more reliable approach)
+        window.addEventListener('pagehide', handleAppOpen); // Use pagehide
+        window.addEventListener('blur', handleAppOpen);
+
+        // Initial attempt to open the app
+        openApp();
     </script>
 </body>
 </html>
