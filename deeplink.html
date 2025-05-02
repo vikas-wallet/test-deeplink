@@ -6,30 +6,37 @@
     <title>Deeplink Redirect</title>
 </head>
 <body>
+    <h1>Opening Rakuten Wallet Web3...</h1>
+    <p>If the app doesn't open in a few seconds, please click the button below.</p>
+    <button id="backButton" style="display: none;">Go Back</button>
+
     <script>
         var appURL = "rakutenwalletweb3://";
         var appOpened = false;
-        var previousPage = document.referrer;
 
-        function redirectToPreviousPage() {
-            console.log("Attempting to redirect to:", previousPage); // Debugging
-            if (previousPage) {
-                // Use window.history.back() as a more reliable alternative
-                window.history.back();
-            } else {
-                console.warn("Previous page is empty.  Providing fallback."); // Debugging
-                alert("Could not determine previous page. Please navigate back manually.");
-            }
+        // Get the return URL from the query string
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        function showAlert() {
-            alert("Rakuten Wallet Web3 app may not be installed. Click OK to return to the previous page.");
-            redirectToPreviousPage();
+        var returnURL = getParameterByName('returnUrl');
+
+        function redirectToReturnURL() {
+            if (returnURL) {
+                window.location.href = returnURL;
+            } else {
+                alert("Could not determine return URL. Please navigate back manually.");
+            }
         }
 
         function checkAppOpen() {
             if (!appOpened) {
-                showAlert();
+                document.getElementById("backButton").style.display = "block"; // Show the button
             }
         }
 
@@ -46,8 +53,8 @@
         window.addEventListener('pagehide', handleAppOpen);
         window.addEventListener('blur', handleAppOpen);
 
-        // Debugging: Log the referrer immediately
-        console.log("Initial document.referrer:", document.referrer);
+        // Button click handler
+        document.getElementById("backButton").addEventListener("click", redirectToReturnURL);
 
         openApp();
     </script>
