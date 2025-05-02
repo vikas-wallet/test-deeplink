@@ -4,75 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deeplink Redirect</title>
-    <style>
-        #backButton {
-            display: none; /* Initially hidden */
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <h1>Opening Rakuten Wallet Web3...</h1>
-    <p>If you have the app installed, but it doesn't launch within a few seconds, please try the link again.</p>
-   
+    <p>If you have the app installed, it should open automatically.</p>
 
     <script>
         var appURL = "rakutenwalletweb3://";
-        var appOpened = false;
-
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        var returnURL = getParameterByName('returnUrl');
-
-        function redirectToReturnURL() {
-            if (returnURL) {
-                window.location.href = returnURL;
-            } else {
-                alert("Could not determine return URL. Please navigate back manually.");
-            }
-        }
-
-        function checkAppOpen() {
-            if (!appOpened) {
-                // Use a more robust way to show the button
-                //document.getElementById("backButton").style.display = "block";
-            }
-        }
-
-        function handleAppOpen() {
-            appOpened = true;
-        }
 
         function openApp() {
             window.location.replace(appURL);
-            // Increase the delay and use a more reliable check
-            setTimeout(function() {
-                if (!appOpened) {
-                    checkAppOpen(); // Call checkAppOpen directly
-                }
-            }, 3000); // Increased delay to 3 seconds
         }
-
-        // Event listeners
-        window.addEventListener('pagehide', handleAppOpen);
-        window.addEventListener('blur', handleAppOpen);
-
-        // Button click handler
-        //document.getElementById("backButton").addEventListener("click", redirectToReturnURL);
-
-        // Initialize the button's display to 'none' using JavaScript for extra safety
-        //document.getElementById("backButton").style.display = "none";
 
         openApp();
     </script>
