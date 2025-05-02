@@ -17,8 +17,8 @@
 </head>
 <body>
     <h1>Opening Rakuten Wallet Web3...</h1>
-    <p>If the app doesn't open in a few seconds, please click the button below-.</p>
-    <button id="backButton">Go Back</button>
+    <p>If you have the app installed, but it doesn't launch within a few seconds, please try the link again.</p>
+   
 
     <script>
         var appURL = "rakutenwalletweb3://";
@@ -46,7 +46,7 @@
         function checkAppOpen() {
             if (!appOpened) {
                 // Use a more robust way to show the button
-                document.getElementById("backButton").style.display = "block";
+                //document.getElementById("backButton").style.display = "block";
             }
         }
 
@@ -69,10 +69,10 @@
         window.addEventListener('blur', handleAppOpen);
 
         // Button click handler
-        document.getElementById("backButton").addEventListener("click", redirectToReturnURL);
+        //document.getElementById("backButton").addEventListener("click", redirectToReturnURL);
 
         // Initialize the button's display to 'none' using JavaScript for extra safety
-        document.getElementById("backButton").style.display = "none";
+        //document.getElementById("backButton").style.display = "none";
 
         openApp();
     </script>
