@@ -3,55 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deeplink Test</title>
+    <title>Deeplink Redirect</title>
 </head>
 <body>
-    <h1>Deeplink Test Page</h1>
-    <p>Below is the final approach to open the <code>rakutenwalletweb3://</code> link:</p>
+    <script>
+        var appURL = "rakutenwalletweb3://";
+        var appOpened = false;
+        var previousPage = document.referrer;
 
-    <hr>
+        function redirectToPreviousPage() {
+            console.log("Attempting to redirect to:", previousPage); // Debugging
+            if (previousPage) {
+                // Use window.history.back() as a more reliable alternative
+                window.history.back();
+            } else {
+                console.warn("Previous page is empty.  Providing fallback."); // Debugging
+                alert("Could not determine previous page. Please navigate back manually.");
+            }
+        }
 
-    <!-- 1. Fallback Mechanism -->
-    <h2>1. Fallback Mechanism</h2>
-    <button onclick="openWithFallback()">Open Rakuten Wallet (with Fallback)</button>
-    <p>If the app is not installed, this will redirect to a fallback URL after 2 seconds.</p>
-<script>
-    function openWithFallback() {
-        let fallbackTimeout;
-        let appOpened = false;
+        function showAlert() {
+            alert("Rakuten Wallet Web3 app may not be installed. Click OK to return to the previous page.");
+            redirectToPreviousPage();
+        }
 
-        // Start a timer to redirect to the fallback page after 3 seconds
-        fallbackTimeout = setTimeout(function () {
+        function checkAppOpen() {
             if (!appOpened) {
-                window.location.href = "fallback.html"; // Redirect to fallback page
+                showAlert();
             }
-        }, 3000); // Increased timeout to 3 seconds to allow more time for user interaction
+        }
 
-        // Listen for visibility change (to detect if the user left the browser)
-        document.addEventListener("visibilitychange", function () {
-            if (document.visibilityState === "hidden") {
-                // User left the browser (likely opened the app), so clear the fallback timer
-                appOpened = true;
-                clearTimeout(fallbackTimeout);
-            }
-        });
+        function handleAppOpen() {
+            appOpened = true;
+        }
 
-        // Attempt to open the app
-        window.location.href = "rakutenwalletweb3://";
+        function openApp() {
+            window.location.replace(appURL);
+            setTimeout(checkAppOpen, 2000);
+        }
 
-        // Add a safety mechanism to detect if the app was opened
-        setTimeout(function () {
-            if (!appOpened && document.visibilityState === "visible") {
-                // If the app was not opened and the user is still on the page, redirect to fallback
-                window.location.href = "fallback.html";
-            }
-        }, 3000); // Same timeout as the fallback timer
-    }
-</script>
+        // Event listeners
+        window.addEventListener('pagehide', handleAppOpen);
+        window.addEventListener('blur', handleAppOpen);
 
+        // Debugging: Log the referrer immediately
+        console.log("Initial document.referrer:", document.referrer);
 
-
-    <hr>
-
+        openApp();
+    </script>
 </body>
 </html>
