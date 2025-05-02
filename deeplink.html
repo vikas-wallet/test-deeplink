@@ -12,9 +12,12 @@
         var previousPage = document.referrer;
 
         function redirectToPreviousPage() {
+            console.log("Attempting to redirect to:", previousPage); // Debugging
             if (previousPage) {
-                window.location.href = previousPage;
+                // Use window.history.back() as a more reliable alternative
+                window.history.back();
             } else {
+                console.warn("Previous page is empty.  Providing fallback."); // Debugging
                 alert("Could not determine previous page. Please navigate back manually.");
             }
         }
@@ -24,7 +27,6 @@
             redirectToPreviousPage();
         }
 
-        // Use a more robust method for checking if the app opened
         function checkAppOpen() {
             if (!appOpened) {
                 showAlert();
@@ -33,22 +35,20 @@
 
         function handleAppOpen() {
             appOpened = true;
-            // No need to clear the timer here, let it expire naturally
         }
 
-        // Attempt to open the app
         function openApp() {
             window.location.replace(appURL);
-
-            // Start a timer to check if the app opened after a delay
-            setTimeout(checkAppOpen, 2000); // Increased delay to 2 seconds
+            setTimeout(checkAppOpen, 2000);
         }
 
-        // Event listeners (using a more reliable approach)
-        window.addEventListener('pagehide', handleAppOpen); // Use pagehide
+        // Event listeners
+        window.addEventListener('pagehide', handleAppOpen);
         window.addEventListener('blur', handleAppOpen);
 
-        // Initial attempt to open the app
+        // Debugging: Log the referrer immediately
+        console.log("Initial document.referrer:", document.referrer);
+
         openApp();
     </script>
 </body>
